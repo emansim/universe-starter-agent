@@ -16,6 +16,12 @@ def process_rollout(rollout, gamma, lambda_=1.0):
     """
 given a rollout, compute its returns and the advantage
 """
+    # clip rewards
+    for i in range(len(rollout.rewards)):
+        if rollout.rewards[i] > 1:
+            rollout.rewards[i] = 1
+        if rollout.rewards[i] < -1:
+            rollout.rewards[i] = -1
     batch_si = np.asarray(rollout.states)
     batch_a = np.asarray(rollout.actions)
     rewards = np.asarray(rollout.rewards)
